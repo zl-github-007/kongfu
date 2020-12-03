@@ -1,6 +1,6 @@
 <template>
     <header id="header">
-        <van-icon name="arrow-left" @click="to"/>
+        <van-icon name="manager-o"/>
         <span>{{title}}</span>
     </header>
 </template>
@@ -11,11 +11,6 @@
             title: {
                 type: String,
             }
-        },
-        methods: {
-            to(){
-                this.$router.go(-1)
-            }
         }
     }
 </script>
@@ -23,18 +18,17 @@
     #header {
         width: 100%;
         height: 50px;
-        color: #ffffff;
-        background: rgba(67, 138, 236, 1);
+        background: #fff;
         position: relative;
     }
-    
     #header span {
-        font-size: 18px;
+        font-family: '楷体';
+        font-weight: bold;
+        color: green;
+        font-size: 25px;
         text-align: center;
         line-height: 50px;
-        font-weight: normal;
     }
-    
     #header i {
         position: absolute;
         left: 5px;

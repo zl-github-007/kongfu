@@ -15,7 +15,7 @@
   </div>
 </template>
 <script>
-import { Dialog } from 'vant';
+import { Dialog } from "vant";
 export default {
   data() {
     return {
@@ -25,27 +25,36 @@ export default {
   },
   methods: {
     go() {
+      var user = JSON.parse(localStorage.getItem("user"));
       if (this.user == "") {
         Dialog.alert({
           title: "温馨提示",
           message: "账号不能为空，请输入账号！"
         }).then(() => {});
-      }else if(this.pwd==""){
-         Dialog.alert({
+      } else if (this.pwd == "") {
+        Dialog.alert({
           title: "温馨提示",
           message: "密码不能为空，请输入密码！"
         }).then(() => {});
-      }else if(this.user!="123" || this.pwd!="123"){
-         Dialog.alert({
+      } else if (this.user != user.username || this.pwd != user.password) {
+        Dialog.alert({
           title: "温馨提示",
           message: "账号或密码输入有误，请重新输入！"
         }).then(() => {});
+      } else {
+        Dialog.alert({
+          message: "登录成功！"
+        }).then(() => {
+          this.$router.push({
+            path: "index"
+          });
+        });
       }
     },
-    to(){
+    to() {
       this.$router.push({
-        path:"register"
-      })
+        path: "register"
+      });
     }
   }
 };
