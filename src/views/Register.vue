@@ -3,7 +3,13 @@
     <Header title="用户注册"></Header>
     <van-form @submit="onSubmit">
       <van-field v-model="username" name="username" label="账号" placeholder="请填写登录账号" />
-      <van-field v-model="password" type="password" name="password" label="密码" placeholder="请填写登录密码" />
+      <van-field
+        v-model="password"
+        type="password"
+        name="password"
+        label="密码"
+        placeholder="请填写登录密码"
+      />
       <div style="margin: 16px;">
         <van-button round block type="info" native-type="submit">提交</van-button>
       </div>
@@ -26,9 +32,9 @@ export default {
   },
   methods: {
     to() {
-        this.$router.push({
-            path:"termsofuse"
-        })
+      this.$router.push({
+        path: "termsofuse"
+      });
     },
     onSubmit(values) {
       if (this.username == "") {
@@ -45,7 +51,7 @@ export default {
         Dialog.alert({
           message: "注册成功"
         }).then(() => {
-          localStorage.setItem("user",JSON.stringify(values))
+          localStorage.setItem("user", JSON.stringify(values));
           this.$router.go(-1);
         });
       }

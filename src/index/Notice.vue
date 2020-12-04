@@ -1,13 +1,15 @@
 <template>
-    <div id="notice">
-        <Header title="通知公告"></Header>
-    </div>
+  <div id="notice">
+    <Header title="通知公告"></Header>
+    <van-empty description="暂无数据" />
+  </div>
 </template>
 <script>
-import Header from '../components/Header'
+import { Empty } from "vant";
+import Header from "../components/Header";
 export default {
-    components:{
-        Header
-    }
-}
+  components: {
+    Header
+  }
+};
 </script>

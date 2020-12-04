@@ -140,12 +140,16 @@ const router = new Router({
             path: '/management',
             component: () =>
                 import ('../src/user/Management.vue')
+        },
+        {
+            path: '/modify',
+            component: () =>
+                import ('../src/user/Modify.vue')
         }
     ]
 })
-
 router.beforeEach((to, from, next) => {
-    let islogin = localStorage.getItem("user");
+    let islogin = localStorage.getItem("password");
     if (islogin) {
         next();
     } else if (to.path === '/') {

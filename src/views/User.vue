@@ -29,11 +29,18 @@
       </van-col>
     </van-row>
     <div class="user-title">
-      <router-link to="management"><van-cell title="用户资料管理" icon="orders-o" is-link /></router-link>
-      <van-cell title="修改密码" icon="edit" is-link />
-      <van-cell title="扫描推荐" icon="scan" is-link />
-      <van-cell title="下载使用手册" icon="down" is-link />
-      <van-cell title="检查新版本" icon="upgrade" is-link />
+      <router-link to="management">
+        <van-cell title="用户资料管理" icon="orders-o" is-link />
+      </router-link>
+      <router-link to="modify">
+        <van-cell title="修改密码" icon="edit" is-link />
+      </router-link>
+      <van-cell title="扫描推荐" icon="scan" is-link @click="showPopup" />
+      <van-popup v-model="show">
+        <img src="../../img/36.png" class="img1" />
+      </van-popup>
+      <van-cell title="下载使用手册" icon="down" is-link @click="download" />
+      <van-cell title="检查新版本" icon="upgrade" is-link @click="inspect" />
     </div>
     <button @click="to">退出账号</button>
     <div class="kon"></div>
@@ -41,29 +48,66 @@
   </div>
 </template>
 <script>
+import { Toast } from "vant";
+import { Popup } from "vant";
 import { Cell, CellGroup } from "vant";
 import { Dialog } from "vant";
 import Footer from "../components/Footer";
 export default {
   data() {
     return {
-      username: ""
+      username: "",
+      show: false
     };
   },
   created() {
     this.login();
   },
   methods: {
+    showPopup() {
+      this.show = true;
+    },
+    inspect() {
+      Toast({
+        message: "当前已是最新版本，无需升级！",
+        position: "bottom"
+      });
+    },
+    download() {
+      Dialog.confirm({
+        title: "温馨提示",
+        message: "下载武功果业APP使用手册"
+      })
+        .then(() => {
+          const toast = Toast.loading({
+            duration: 0,
+            forbidClick: true,
+            message: "下载中..."
+          });
+
+          let second = 3;
+          const timer = setInterval(() => {
+            second--;
+            if (second) {
+              toast.message = `下载中...`;
+            } else {
+              Toast.success("下载成功");
+              clearInterval(timer);
+            }
+          }, 1000);
+        })
+        .catch(() => {
+          // on cancel
+        });
+    },
     go() {
       Dialog.alert({
         title: "温馨提示",
         message: "暂时没有权限操作该功能"
-      }).then(() => {
-        // on close
-      });
+      }).then(() => {});
     },
     login() {
-      var user = JSON.parse(localStorage.getItem("user"));
+      var user = JSON.parse(localStorage.getItem("password"));
       console.log(user);
       if (user) {
         this.username = user.username;
@@ -76,6 +120,7 @@ export default {
       })
         .then(() => {
           localStorage.removeItem("user");
+          localStorage.removeItem("password");
           this.$router.push({
             path: "/"
           });
@@ -106,6 +151,9 @@ export default {
   padding-bottom: 20px;
   color: #fff;
 }
+.img1 {
+  width: 100%;
+}
 .van-row {
   background: #fff;
 }
@@ -134,5 +182,8 @@ button {
   background: rgba(225, 102, 0, 1);
   width: 100%;
   padding: 10px 0;
+}
+.van-popup {
+  width: 80%;
 }
 </style>

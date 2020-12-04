@@ -6,11 +6,14 @@
       <van-icon name="user-circle-o" />
       <input type="text" placeholder="账号" v-model="user" />
       <br />
-      <van-icon name="user-circle-o" />
+      <van-icon name="manager-o" />
       <input type="password" placeholder="密码" v-model="pwd" />
       <br />
       <button @click="go">登录</button>
-      <span class="span1" @click="to">还没有账号？立即注册</span>
+      <br />
+      <p class="p1">
+        <span class="span1" @click="to">还没有账号？立即注册</span>
+      </p>
     </div>
   </div>
 </template>
@@ -26,6 +29,7 @@ export default {
   methods: {
     go() {
       var user = JSON.parse(localStorage.getItem("user"));
+      console.log(user);
       if (this.user == "") {
         Dialog.alert({
           title: "温馨提示",
@@ -45,6 +49,7 @@ export default {
         Dialog.alert({
           message: "登录成功！"
         }).then(() => {
+          localStorage.setItem("password", JSON.stringify(user));
           this.$router.push({
             path: "index"
           });
@@ -69,7 +74,7 @@ export default {
   );
 }
 #img1 {
-  margin-top: 40px;
+  margin-top: 20px;
   width: 60%;
 }
 .name {
@@ -105,11 +110,16 @@ button {
   color: rgba(65, 174, 132, 1);
   padding: 7px 5px;
 }
+.p1 {
+  padding-bottom: 20px;
+  margin-bottom: 0px;
+  margin-top: 20px;
+}
 .span1 {
   padding: 0 0 0 100px;
   color: #fff;
 }
 .form {
-  margin-top: 55px;
+  margin-top: 35px;
 }
 </style>
